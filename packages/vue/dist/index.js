@@ -17547,9 +17547,9 @@ function Qd(e, t) {
     n().engine || s(o, () => ({ engine: "qlexpress" }));
   });
   const o = Ue(), { addParameter: i } = on(), { updateNodeData: s } = st(), a = [
-    { label: "QLExpress", value: "qlexpress" },
+    { label: "JavaScript", value: "js" },
     { label: "Groovy", value: "groovy" },
-    { label: "JavaScript", value: "js" }
+    { label: "QLExpress", value: "qlexpress" }
   ];
   var l = {
     get data() {
@@ -20083,35 +20083,36 @@ const Ib = /* @__PURE__ */ df({
   setup(e, { expose: t }) {
     const n = e, r = ff(null);
     let o = null;
-    function i(a) {
-      if (a === null || typeof a != "object") return a;
+    function i(l) {
+      if (l === null || typeof l != "object") return l;
       try {
-        return structuredClone(a);
+        return structuredClone(l);
       } catch {
         try {
-          return JSON.parse(JSON.stringify(a));
+          return JSON.parse(JSON.stringify(l));
         } catch {
-          return console.warn("Failed to clone object, returning original (may cause issues)", a), a;
+          return console.warn("Failed to clone object, returning original (may cause issues)", l), l;
         }
       }
     }
     return pf(() => {
       if (r.value) {
-        const a = { ...n };
-        "data" in a && a.data != null && (a.data = i(a.data)), o = new Xm({
-          ...a,
+        const l = { ...n };
+        "data" in l && l.data != null && (l.data = i(l.data)), o = new Xm({
+          ...l,
           element: r.value
         });
       }
     }), hf(() => {
       o && (o.destroy(), o = null);
     }), t({
-      getData: () => o ? o.getData() : (console.warn("Tinyflow instance is not initialized"), null)
-    }), (a, l) => (vf(), gf("div", {
+      getData: () => o ? o.getData() : (console.warn("Tinyflow instance is not initialized"), null),
+      getInstance: () => o || (console.warn("Tinyflow instance is not initialized"), null)
+    }), (l, u) => (vf(), gf("div", {
       ref_key: "divRef",
       ref: r,
-      class: yf(["tinyflow", a.className]),
-      style: mf(a.style)
+      class: yf(["tinyflow", l.className]),
+      style: mf(l.style)
     }, null, 6));
   }
 });

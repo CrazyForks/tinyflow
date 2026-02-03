@@ -18176,9 +18176,9 @@ function Tf(e, t) {
     n().engine || s(o, () => ({ engine: "qlexpress" }));
   });
   const o = ct(), { addParameter: i } = _n(), { updateNodeData: s } = yt(), a = [
-    { label: "QLExpress", value: "qlexpress" },
+    { label: "JavaScript", value: "js" },
     { label: "Groovy", value: "groovy" },
-    { label: "JavaScript", value: "js" }
+    { label: "QLExpress", value: "qlexpress" }
   ];
   var l = {
     get data() {
@@ -20700,7 +20700,8 @@ customElements.define("tinyflow-component", le(_x, { options: {}, onInit: {} }, 
 const $x = Gf((e, t) => {
   const n = Ba(null), r = Ba(null);
   Jf(t, () => ({
-    getData: () => r.current ? r.current.getData() : (console.warn("Tinyflow instance is not initialized"), null)
+    getData: () => r.current ? r.current.getData() : (console.warn("Tinyflow instance is not initialized"), null),
+    getInstance: () => r.current ? r.current : (console.warn("Tinyflow instance is not initialized"), null)
   }));
   const { data: o, style: i, className: s } = e;
   return Qf(() => {

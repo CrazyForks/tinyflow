@@ -17563,9 +17563,9 @@ function Qd(e, t) {
     n().engine || s(o, () => ({ engine: "qlexpress" }));
   });
   const o = Ge(), { addParameter: i } = an(), { updateNodeData: s } = st(), a = [
-    { label: "QLExpress", value: "qlexpress" },
+    { label: "JavaScript", value: "js" },
     { label: "Groovy", value: "groovy" },
-    { label: "JavaScript", value: "js" }
+    { label: "QLExpress", value: "qlexpress" }
   ];
   var l = {
     get data() {
