@@ -25,6 +25,13 @@ const Tinyflow = forwardRef<TinyflowHandle, TinyflowOptions>((options, ref) => {
             }
             console.warn('Tinyflow instance is not initialized');
             return null;
+        },
+        getInstance: () => {
+            if (tinyflowInstance.current) {
+                return tinyflowInstance.current;
+            }
+            console.warn('Tinyflow instance is not initialized');
+            return null;
         }
     }));
 

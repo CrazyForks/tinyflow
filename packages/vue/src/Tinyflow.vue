@@ -63,7 +63,16 @@ const getData = () => {
     return null;
 };
 
+const getInstance = () => {
+    if (tinyflow) {
+        return tinyflow;
+    }
+    console.warn('Tinyflow instance is not initialized');
+    return null;
+};
+
 defineExpose({
-    getData
+    getData,
+    getInstance
 });
 </script>

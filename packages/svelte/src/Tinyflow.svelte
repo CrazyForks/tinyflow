@@ -26,6 +26,10 @@
         return null;
     }
 
+    export function getInstance() {
+        return tinyflowInstance;
+    }
+
     // Lifecycle: Mount
     onMount(() => {
         if (divRef) {
