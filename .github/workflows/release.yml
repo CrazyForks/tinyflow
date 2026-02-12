@@ -61,10 +61,14 @@ jobs:
           title: ${{ github.ref_name == 'main' && 'Publish a new stable version' || 'Publish a new pre-release version' }}
           commit: >-
             ${{ github.ref_name == 'main' && 'chore(release): publish a new release version' || 'chore(release): publish a new pre-release version' }}
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#          NPM_CONFIG_PROVENANCE: true # 启用 NPM Provenance 功能
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true # 启用 NPM Provenance 功能
+          NPM_CONFIG_PROVENANCE: true
+          NPM_CONFIG_ACCESS: public
 
       # 6. 打印日志以确认版本号
       - name: Print Version and Published Package
