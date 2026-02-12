@@ -1,12 +1,15 @@
 name: Release and Publish to NPM
 
+env:
+  PNPM_VERSION: 9.15.4
+
 on:
   push:
     branches:
       - main # 或者你的主分支名称
     paths:
       - ".changeset/*.md" # 仅在 .changeset 文件夹中的 .md 文件发生变更时触发
-#      - "package.json" # 如果 package.json 发生变更也触发
+  #      - "package.json" # 如果 package.json 发生变更也触发
   workflow_dispatch: # 允许手动触发工作流
 
 #on:
@@ -23,32 +26,34 @@ permissions:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 20 ]
+
     steps:
       # 1. 检出代码
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # 获取完整的 Git 历史记录，Changesets 需要它来生成变更日志
+      - name: Checkout Repo
+        uses: actions/checkout@v6
 
-      # 2. 设置 Node.js 环境
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20 # 指定 Node.js 20 或更高版本
-          registry-url: https://registry.npmjs.org/ # 设置 NPM 注册表
-
-      # 3. 安装 pnpm
       - name: Install pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
 
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Update npm for Trusted Publishing
         run: npm install -g npm@11.6.2
 
-      # 4. 安装依赖
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --strict-peer-dependencies
 
       # 5. 使用 Changesets Action 自动化发布
       - name: Create Release PR or publish stable version to npm
@@ -61,10 +66,10 @@ jobs:
           title: ${{ github.ref_name == 'main' && 'Publish a new stable version' || 'Publish a new pre-release version' }}
           commit: >-
             ${{ github.ref_name == 'main' && 'chore(release): publish a new release version' || 'chore(release): publish a new pre-release version' }}
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-#          NPM_CONFIG_PROVENANCE: true # 启用 NPM Provenance 功能
+        #        env:
+        #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        #          NPM_CONFIG_PROVENANCE: true # 启用 NPM Provenance 功能
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
