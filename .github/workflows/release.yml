@@ -39,8 +39,10 @@ jobs:
           registry-url: https://registry.npmjs.org/ # 设置 NPM 注册表
 
       # 3. 安装 pnpm
-      - name: Install pnpm
-        run: npm install -g pnpm
+#      - name: Install pnpm
+#        run: npm install -g pnpm
+      - name: Update npm for Trusted Publishing
+        run: npm install -g npm@11.6.2
 
       # 4. 安装依赖
       - name: Install Dependencies
